@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="inflexion",
     version="0.1",
-    description="generic code for morphological analysis (extracted from work on Ancient Greek)",
+    description="generic code for morphological analysis",
     license="MIT",
     url="http://github.com/jtauber/inflexion",
     author="James Tauber",
