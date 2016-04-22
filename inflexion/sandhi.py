@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 class SandhiRule:
     def __init__(self, rule):
         """
@@ -11,3 +14,21 @@ class SandhiRule:
         self.suffix = self.d + self.e
         self.distinguisher = self.c + self.e
         self.surface = self.a + self.c + self.e
+
+
+class SurfaceLookup:
+    def __init__(self):
+        """
+        a reverse mapping of surface to key, stem pairs
+        """
+        self.suffix_rules = defaultdict(set)
+
+    def add(self, key, rule):
+        r = SandhiRule(rule)
+        self.suffix_rules[r.surface].add((key, r.stem))
+
+    def possible_stems(self, form):
+        for surface, rules in self.suffix_rules.items():
+            if form.endswith(surface):
+                for key, stem_ending in rules:
+                    yield (key, form[:-len(surface)] + stem_ending)

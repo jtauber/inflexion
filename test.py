@@ -2,7 +2,7 @@
 
 import unittest
 
-from inflexion.sandhi import SandhiRule
+from inflexion.sandhi import SandhiRule, SurfaceLookup
 
 
 class SandhiTest(unittest.TestCase):
@@ -35,6 +35,11 @@ class SandhiTest(unittest.TestCase):
         self.assertEqual(rule.stem, "")
         self.assertEqual(rule.suffix, "X")
         self.assertEqual(rule.surface, "X")
+
+    def test_surfacelookup_1(self):
+        lookup = SurfaceLookup()
+        lookup.add("foo", "A|B>C<D|E")
+        self.assertEqual(list(lookup.possible_stems("FACE")), [("foo", "FAB")])
 
 
 if __name__ == "__main__":
