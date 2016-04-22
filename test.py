@@ -36,6 +36,20 @@ class SandhiTest(unittest.TestCase):
         self.assertEqual(rule.suffix, "X")
         self.assertEqual(rule.surface, "X")
 
+    def test_match_theme_1(self):
+        rule = SandhiRule("A|B>C<D|E")
+        self.assertEqual(rule.match_theme("AB"), "A")
+        self.assertEqual(rule.match_theme("CAB"), "CA")
+        self.assertIsNone(rule.match_theme("A"))
+        self.assertIsNone(rule.match_theme("B"))
+
+    def test_match_theme_2(self):
+        rule = SandhiRule("|B>C<D|E")
+        self.assertEqual(rule.match_theme("AB"), "A")
+        self.assertEqual(rule.match_theme("CAB"), "CA")
+        self.assertIsNone(rule.match_theme("A"))
+        self.assertEqual(rule.match_theme("B"), "")
+
     def test_surfacelookup_1(self):
         lookup = SurfaceLookup()
         lookup.add("foo", "A|B>C<D|E")

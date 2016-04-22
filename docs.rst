@@ -46,3 +46,17 @@ PAI.3S ἐρα
 PAS.3S ἐρα
 PMI.2S ἐρα
 PMS.2S ἐρα
+
+Given a stem and a rule, we can test if the given stem ends with the rule's
+stem part and, if so, return the theme. Note this theme will be longer than the
+rule's theme part if the rule's stem part is only the rightmost part of the
+given stem.
+
+>>> r1 = SandhiRule("|α>ᾷ<ει|")
+>>> r1.match_theme("ἐρα")
+'ἐρ'
+
+``match_theme`` returns None if the stem does not match.
+
+>>> r1 = SandhiRule("|α>ᾷ<ει|")
+>>> r1.match_theme("φιλε")
