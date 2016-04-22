@@ -50,6 +50,12 @@ class SandhiTest(unittest.TestCase):
         self.assertIsNone(rule.match_theme("A"))
         self.assertEqual(rule.match_theme("B"), "")
 
+    def test_match_theme_3(self):
+        rule = SandhiRule("A|>C<D|E")
+        self.assertEqual(rule.match_theme("A"), "A")
+        self.assertEqual(rule.match_theme("CA"), "CA")
+        self.assertIsNone(rule.match_theme("B"))
+
     def test_surfacelookup_1(self):
         lookup = SurfaceLookup()
         lookup.add("foo", "A|B>C<D|E")
