@@ -82,3 +82,38 @@ We can also inflect a given stem according to a given key:
 >>> for result in rules.inflect("παυ", "PAI.3S"):
 ...     print(sorted(result.items()))
 [('base', 'παυ'), ('ending', 'ει'), ('rule', SandhiRule('|>ει<ει|')), ('used_default', True)]
+
+
+lexicon
+-------
+
+A ``Lexicon`` is currently a mapping between lemmas and stems where stems
+are dictionaries mapping key regexes to stems.
+
+For example, the stems dictionary in the example below maps (for the lemma
+παύω) any key matching ``P`` (i.e. present forms) to the stem "παυ" and any key
+matching ``A[AM]I`` (i.e. active or middle aorist indicatives) to "ἐπαυσ".
+
+>>> from inflexion.lexicon import Lexicon
+>>> lexicon = Lexicon()
+>>> lexicon.add("παύω", {
+...     "P": "παυ",
+...     "I": "ἐπαυ",
+...     "F[AM]": "παυσ",
+...     "A[AM][NPDSO]": "παυσ",
+...     "A[AM]I": "ἐπαυσ",
+...     "XA": "πεπαυκ",
+...     "YA": "ἐπεπαυκ",
+...     "X[MP]": "πεπαυ",
+...     "Y[MP]": "ἐπεπαυ",
+...     "AP[NPDSO]": "παυθ",
+...     "API": "ἐπαυθ",
+...     "FP": "παυθησ",
+... })
+
+This can then be used look up a stem (perhaps from
+``StemmingRuleSet.possible_stems``) to see what lemma and key regex it could
+be:
+
+>>> sorted(lexicon.stem_to_lemma_key_regex["παυσ"])
+[('παύω', 'A[AM][NPDSO]'), ('παύω', 'F[AM]')]
