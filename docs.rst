@@ -46,13 +46,19 @@ First we instantiate a ``StemmingRuleSet`` object:
 Then we add a bunch of keyed rules:
 
 >>> rules.add("PAI.3S", "|>ει<ει|")
+SandhiRule('|>ει<ει|')
 >>> rules.add("PAI.3S", "|ε>εῖ<ει|")
+SandhiRule('|ε>εῖ<ει|')
 >>> rules.add("PAI.3S", "|ο>οῖ<ει|")
+SandhiRule('|ο>οῖ<ει|')
 >>> rules.add("PAI.3S", "|α>ᾷ<ει|")
->>> rules.add("PAI.3S", "|α>ᾷ<ει|")
+SandhiRule('|α>ᾷ<ει|')
 >>> rules.add("PAS.3S", "|α>ᾷ<ῃ|")
+SandhiRule('|α>ᾷ<ῃ|')
 >>> rules.add("PMI.2S", "|α>ᾷ<εσαι|")
+SandhiRule('|α>ᾷ<εσαι|')
 >>> rules.add("PMS.2S", "|α>ᾷ<ησαι|")
+SandhiRule('|α>ᾷ<ησαι|')
 
 Now we can get the possible key, stem pairs for a particular form:
 
@@ -62,3 +68,17 @@ PAI.3S ἐρα
 PAS.3S ἐρα
 PMI.2S ἐρα
 PMS.2S ἐρα
+
+We can also inflect a given stem according to a given key:
+
+>>> for result in rules.inflect("ἐρα", "PAI.3S"):
+...     print(sorted(result.items()))
+[('base', 'ἐρ'), ('ending', 'ᾷ'), ('rule', SandhiRule('|α>ᾷ<ει|')), ('used_default', False)]
+
+>>> for result in rules.inflect("φιλε", "PAI.3S"):
+...     print(sorted(result.items()))
+[('base', 'φιλ'), ('ending', 'εῖ'), ('rule', SandhiRule('|ε>εῖ<ει|')), ('used_default', False)]
+
+>>> for result in rules.inflect("παυ", "PAI.3S"):
+...     print(sorted(result.items()))
+[('base', 'παυ'), ('ending', 'ει'), ('rule', SandhiRule('|>ει<ει|')), ('used_default', True)]

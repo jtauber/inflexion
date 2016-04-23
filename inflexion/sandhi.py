@@ -13,6 +13,9 @@ class SandhiRule:
         self.distinguisher = self.c + self.e
         self.surface = self.a + self.c + self.e
 
+    def __repr__(self):
+        return "SandhiRule('{0.a}|{0.b}>{0.c}<{0.d}|{0.e}')".format(self)
+
     def match_theme(self, stem):
         """
         If the given stem ends with this rule's stem part, return the theme
