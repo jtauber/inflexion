@@ -7,7 +7,7 @@ generic code for morphological analysis (extracted from work on Ancient Greek)
 
 You can install with
 
-    pip install inflexion==0.2
+    pip install inflexion==0.3
 
 See [docs.rst](https://github.com/jtauber/inflexion/blob/master/docs.rst)
 for documentation.
