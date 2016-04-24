@@ -126,15 +126,20 @@ class LexiconTest(unittest.TestCase):
 
 class MainTest(unittest.TestCase):
 
-    def test_generate(self):
+    def setUp(self):
         lexicon = Lexicon()
         lexicon.add("FOO", {"bar": "foo"})
         rules = StemmingRuleSet()
         rules.add("barista", "|o><|llow")
-        inflexion = Inflexion()
-        inflexion.add_lexicon(lexicon)
-        inflexion.add_stemming_rule_set(rules)
-        self.assertEqual(inflexion.generate("FOO", "barista"), {"follow"})
+        self.inflexion = Inflexion()
+        self.inflexion.add_lexicon(lexicon)
+        self.inflexion.add_stemming_rule_set(rules)
+
+    def test_generate(self):
+        self.assertEqual(self.inflexion.generate("FOO", "barista"), {"follow"})
+
+    def test_parse(self):
+        self.assertEqual(self.inflexion.parse("follow"), {('FOO', 'barista')})
 
 
 if __name__ == "__main__":

@@ -121,8 +121,8 @@ be:
 Inflexion
 ---------
 
-``Inflexion`` combines a ``StemmingRuleSet`` and ``Lexicon`` to parse, stem,
-generate, and analyze.
+``Inflexion`` combines a ``StemmingRuleSet`` and ``Lexicon`` to generate and
+parse forms.
 
 >>> from inflexion import Inflexion
 
@@ -135,3 +135,6 @@ generate, and analyze.
 
 (note that, inflexion itself does not have knowledge of Ancient Greek
 accentuation)
+
+>>> inflexion.parse("παυει")
+{('παύω', 'PAI.3S')}
