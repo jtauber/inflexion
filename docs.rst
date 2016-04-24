@@ -117,3 +117,21 @@ be:
 
 >>> sorted(lexicon.stem_to_lemma_key_regex["παυσ"])
 [('παύω', 'A[AM][NPDSO]'), ('παύω', 'F[AM]')]
+
+Inflexion
+---------
+
+``Inflexion`` combines a ``StemmingRuleSet`` and ``Lexicon`` to parse, stem,
+generate, and analyze.
+
+>>> from inflexion import Inflexion
+
+>>> inflexion = Inflexion()
+>>> inflexion.add_lexicon(lexicon)
+>>> inflexion.add_stemming_rule_set(rules)
+
+>>> inflexion.generate("παύω", "PAI.3S")
+{'παυει'}
+
+(note that, inflexion itself does not have knowledge of Ancient Greek
+accentuation)

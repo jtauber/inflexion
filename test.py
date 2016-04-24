@@ -5,6 +5,7 @@ import unittest
 from inflexion.sandhi import SandhiRule
 from inflexion.stemming import StemmingRuleSet
 from inflexion.lexicon import Lexicon
+from inflexion import Inflexion
 
 
 class SandhiTest(unittest.TestCase):
@@ -116,6 +117,24 @@ class LexiconTest(unittest.TestCase):
             lexicon.stem_to_lemma_key_regex["foo"],
             {("FOO", "bar")}
         )
+
+    def test_find_stems(self):
+        lexicon = Lexicon()
+        lexicon.add("FOO", {"bar": "foo"})
+        self.assertEqual(lexicon.find_stems("FOO", "barista"), {"foo"})
+
+
+class MainTest(unittest.TestCase):
+
+    def test_generate(self):
+        lexicon = Lexicon()
+        lexicon.add("FOO", {"bar": "foo"})
+        rules = StemmingRuleSet()
+        rules.add("barista", "|o><|llow")
+        inflexion = Inflexion()
+        inflexion.add_lexicon(lexicon)
+        inflexion.add_stemming_rule_set(rules)
+        self.assertEqual(inflexion.generate("FOO", "barista"), {"follow"})
 
 
 if __name__ == "__main__":
