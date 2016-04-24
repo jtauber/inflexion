@@ -136,5 +136,13 @@ parse forms.
 (note that, inflexion itself does not have knowledge of Ancient Greek
 accentuation)
 
+``Inflexion`` can also parse a form with possible lemma / key pairs:
+
 >>> inflexion.parse("παυει")
 {('παύω', 'PAI.3S')}
+
+This will return an empty set if no ending matches or if the stem necessary for
+any endings is not in the given lexicons.
+
+>>> inflexion.parse("λυει")
+set()
