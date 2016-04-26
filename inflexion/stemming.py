@@ -14,7 +14,7 @@ class StemmingRuleSet:
     def add(self, key, rule):
         r = SandhiRule(rule)
         self.key_to_rules[key].append(r)
-        self.surface_to_key_stem[r.surface].add((key, r.stem))
+        self.surface_to_key_stem[r.surface].add((key, r))
         return r
 
     def inflect(self, stem, key):
@@ -47,5 +47,5 @@ class StemmingRuleSet:
     def possible_stems(self, form):
         for surface, rules in self.surface_to_key_stem.items():
             if form.endswith(surface):
-                for key, stem_ending in rules:
-                    yield (key, form[:-len(surface)] + stem_ending)
+                for key, rule in rules:
+                    yield (key, form[:-len(surface)] + rule.stem)
