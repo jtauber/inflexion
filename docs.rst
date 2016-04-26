@@ -116,7 +116,7 @@ lexicon
 -------
 
 A ``Lexicon`` is currently a mapping between lemmas and stems where stems
-are dictionaries mapping key regexes to stems.
+are dictionaries mapping key regexes to stem sets.
 
 For example, the stems dictionary in the example below maps (for the lemma
 παύω) any key matching ``P`` (i.e. present forms) to the stem "παυ" and any key
@@ -125,18 +125,18 @@ matching ``A[AM]I`` (i.e. active or middle aorist indicatives) to "ἐπαυσ".
 >>> from inflexion.lexicon import Lexicon
 >>> lexicon = Lexicon()
 >>> lexicon.add("παύω", [
-...     ("P", "παυ"),
-...     ("I", "ἐπαυ"),
-...     ("F[AM]", "παυσ"),
-...     ("A[AM][NPDSO]", "παυσ"),
-...     ("A[AM]I", "ἐπαυσ"),
-...     ("XA", "πεπαυκ"),
-...     ("YA", "ἐπεπαυκ"),
-...     ("X[MP]", "πεπαυ"),
-...     ("Y[MP]", "ἐπεπαυ"),
-...     ("AP[NPDSO]", "παυθ"),
-...     ("API", "ἐπαυθ"),
-...     ("FP", "παυθησ"),
+...     ("P", {"παυ"}),
+...     ("I", {"ἐπαυ"}),
+...     ("F[AM]", {"παυσ"}),
+...     ("A[AM][NPDSO]", {"παυσ"}),
+...     ("A[AM]I", {"ἐπαυσ"}),
+...     ("XA", {"πεπαυκ"}),
+...     ("YA", {"ἐπεπαυκ"}),
+...     ("X[MP]", {"πεπαυ"}),
+...     ("Y[MP]", {"ἐπεπαυ"}),
+...     ("AP[NPDSO]", {"παυθ"}),
+...     ("API", {"ἐπαυθ"}),
+...     ("FP", {"παυθησ"}),
 ... ])
 
 This can then be used look up a stem (perhaps from
