@@ -13,7 +13,10 @@ class Inflexion:
     def add_stemming_rule_set(self, stemming_rule_set):
         self.stemming_rule_sets.append(stemming_rule_set)
 
-    def generate(self, lemma, key):
+    def generate(self, lemma, key, tag_filter=None):
+
+        tag_filter = tag_filter or set()
+
         stems = set()
         for lexicon in self.lexicons:
             stems.add(lexicon.find_stems(lemma, key))
@@ -21,7 +24,7 @@ class Inflexion:
         results = set()
         for stem in stems:
             for stemming_rule_set in self.stemming_rule_sets:
-                for result in stemming_rule_set.inflect(stem, key):
+                for result in stemming_rule_set.inflect(stem, key, tag_filter):
                     results.add(result["base"] + result["ending"])
 
         return results
