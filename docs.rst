@@ -32,6 +32,14 @@ given stem.
 
 >>> r2.match_theme("φιλε")
 
+``SandhiRules`` can be given a set of tags that can be used later to filter out
+results if the rule is only to be used in certain contexts:
+
+>>> r3 = SandhiRule("|>ε<|", {"no-final-nu-aai.3s"})
+>>> r3.tags
+{'no-final-nu-aai.3s'}
+
+
 stemming
 --------
 
