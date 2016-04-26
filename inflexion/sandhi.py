@@ -19,7 +19,11 @@ class SandhiRule:
         self.surface = self.a + self.c + self.e
 
     def __repr__(self):
-        return "SandhiRule('{0.a}|{0.b}>{0.c}<{0.d}|{0.e}')".format(self)
+        if self.tags:
+            return "SandhiRule('{0.a}|{0.b}>{0.c}<{0.d}|{0.e}', " \
+                "tags={1})".format(self, self.tags)
+        else:
+            return "SandhiRule('{0.a}|{0.b}>{0.c}<{0.d}|{0.e}')".format(self)
 
     def match_theme(self, stem):
         """

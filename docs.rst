@@ -91,6 +91,26 @@ We can also inflect a given stem according to a given key:
 ...     print(sorted(result.items()))
 [('base', 'παυ'), ('ending', 'ει'), ('rule', SandhiRule('|>ει<ει|')), ('used_default', True)]
 
+Rules can be included or excluded based on their tags. A ``+tag`` will only be
+used if ``tag`` is used as a filter on ``possible_stems`` or ``inflect``. A
+``-tag`` will not be used if ``tag`` is used as a filter.
+
+>>> rules.add("PAI.1P", "|α!>α<|μεν", {"-enclitic"})
+SandhiRule('|α!>α<|μεν', tags={'-enclitic'})
+>>> rules.add("PAI.1P", "|α!>α<|μέν", {"+enclitic"})
+SandhiRule('|α!>α<|μέν', tags={'+enclitic'})
+
+>>> for result in rules.inflect("ἱστα!", "PAI.1P"):
+...     print(result['base'] + result['ending'])
+ἱσταμεν
+
+>>> for result in rules.inflect("φα!", "PAI.1P", {"enclitic"}):
+...     print(result['base'] + result['ending'])
+φαμέν
+
+In the above two examples, different rules are triggered depending on whether
+the ``"enclitic"`` tag filter is passed in.
+
 
 lexicon
 -------

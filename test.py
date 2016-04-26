@@ -41,6 +41,11 @@ class SandhiTest(unittest.TestCase):
         self.assertEqual(rule.surface, "X")
         self.assertEqual(repr(rule), "SandhiRule('|><|X')")
 
+    def test_sandhirule_creation_3(self):
+        rule = SandhiRule("A|B>C<D|E", {"+tag"})
+        self.assertEqual(rule.tags, {"+tag"})
+        self.assertEqual(repr(rule), "SandhiRule('A|B>C<D|E', tags={'+tag'})")
+
     def test_match_theme_1(self):
         rule = SandhiRule("A|B>C<D|E")
         self.assertEqual(rule.match_theme("AB"), "A")
@@ -105,6 +110,20 @@ class StemmingTest(unittest.TestCase):
             "rule": r,
             "used_default": True,
         }])
+
+    def test_inflect_4(self):
+        rules = StemmingRuleSet()
+        rules.add("foo", "A|B>C<D|E")
+        rules.add("foo", "A|B>C<D|F", {"+bar"})
+        rules.add("foo", "A|B>C<D|G", {"-bar"})
+        self.assertEqual(sorted([
+            r["base"] + r["ending"]
+            for r in rules.inflect("FAB", "foo")]),
+            ["FACE", "FACG"])
+        self.assertEqual(sorted([
+            r["base"] + r["ending"]
+            for r in rules.inflect("FAB", "foo", {"bar"})]),
+            ["FACE", "FACF"])
 
 
 class LexiconTest(unittest.TestCase):

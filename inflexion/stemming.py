@@ -17,11 +17,23 @@ class StemmingRuleSet:
         self.surface_to_key_stem[r.surface].add((key, r))
         return r
 
-    def inflect(self, stem, key):
+    def inflect(self, stem, key, tag_filter=None):
         base_endings = []
         default = []
+        tag_filter = tag_filter or set()
 
         for rule in self.key_to_rules[key]:
+            skip = False
+            for tag in rule.tags:
+                if tag[0] == "+" and tag[1:] not in tag_filter:
+                    skip = True
+                    break
+                if tag[0] == "-" and tag[1:] in tag_filter:
+                    skip = True
+                    break
+            if skip:
+                continue
+
             base = rule.match_theme(stem)
             if base is not None:
                 if rule.stem:
