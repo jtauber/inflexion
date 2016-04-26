@@ -35,9 +35,9 @@ given stem.
 ``SandhiRules`` can be given a set of tags that can be used later to filter out
 results if the rule is only to be used in certain contexts:
 
->>> r3 = SandhiRule("|α!>α<|μέν", {"enclitic"})
+>>> r3 = SandhiRule("|α!>α<|μέν", {"+enclitic"})
 >>> r3.tags
-{'enclitic'}
+{'+enclitic'}
 
 
 stemming
