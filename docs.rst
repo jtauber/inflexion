@@ -96,20 +96,20 @@ matching ``A[AM]I`` (i.e. active or middle aorist indicatives) to "ἐπαυσ".
 
 >>> from inflexion.lexicon import Lexicon
 >>> lexicon = Lexicon()
->>> lexicon.add("παύω", {
-...     "P": "παυ",
-...     "I": "ἐπαυ",
-...     "F[AM]": "παυσ",
-...     "A[AM][NPDSO]": "παυσ",
-...     "A[AM]I": "ἐπαυσ",
-...     "XA": "πεπαυκ",
-...     "YA": "ἐπεπαυκ",
-...     "X[MP]": "πεπαυ",
-...     "Y[MP]": "ἐπεπαυ",
-...     "AP[NPDSO]": "παυθ",
-...     "API": "ἐπαυθ",
-...     "FP": "παυθησ",
-... })
+>>> lexicon.add("παύω", [
+...     ("P", "παυ"),
+...     ("I", "ἐπαυ"),
+...     ("F[AM]", "παυσ"),
+...     ("A[AM][NPDSO]", "παυσ"),
+...     ("A[AM]I", "ἐπαυσ"),
+...     ("XA", "πεπαυκ"),
+...     ("YA", "ἐπεπαυκ"),
+...     ("X[MP]", "πεπαυ"),
+...     ("Y[MP]", "ἐπεπαυ"),
+...     ("AP[NPDSO]", "παυθ"),
+...     ("API", "ἐπαυθ"),
+...     ("FP", "παυθησ"),
+... ])
 
 This can then be used look up a stem (perhaps from
 ``StemmingRuleSet.possible_stems``) to see what lemma and key regex it could

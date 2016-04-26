@@ -23,8 +23,7 @@ class StemmingRuleSet:
 
         for rule in self.key_to_rules[key]:
             base = rule.match_theme(stem)
-
-            if base:
+            if base is not None:
                 if rule.stem:
                     base_endings.append((base, rule.distinguisher, rule))
                 else:

@@ -12,18 +12,19 @@ class Lexicon:
 
     def add(self, lemma, stems):
         """
-        stems is a dictionary of key regex to stem
+        stems is a list of (key regex, stem) pairs
         """
         self.lemma_to_stems[lemma] = stems
-        for key_regex, stem in stems.items():
+        for key_regex, stem in stems:
             self.stem_to_lemma_key_regex[stem].add((lemma, key_regex))
 
     def find_stems(self, lemma, key):
         """
-        returns a (possibly empty) set of stems for the given lemma and key
+        returns a stem (or None) for the given lemma and key
         """
-        stems = set()
-        for key_regex, stem in self.lemma_to_stems[lemma].items():
+        result = None
+        for key_regex, stem in self.lemma_to_stems[lemma]:
             if re.match(key_regex, key):
-                stems.add(stem)
-        return stems
+                result = stem  # we don't break or return as we want last
+
+        return result

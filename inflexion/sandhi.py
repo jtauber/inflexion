@@ -1,3 +1,6 @@
+import re
+
+
 class SandhiRule:
 
     def __init__(self, rule):
@@ -18,12 +21,12 @@ class SandhiRule:
 
     def match_theme(self, stem):
         """
-        If the given stem ends with this rule's stem part, return the theme
+        If the given stem matches this rule's stem part, return the theme
         (which may be more than this rule's theme part if this rule's stem part
         is only the rightmost part of the given stem) or return None if stems
         don't match.
         """
-        if stem.endswith(self.stem):
+        if re.match(".*" + self.stem + "$", stem):
             if self.b:
                 return stem[:-len(self.b)]
             else:

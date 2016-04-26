@@ -16,7 +16,7 @@ class Inflexion:
     def generate(self, lemma, key):
         stems = set()
         for lexicon in self.lexicons:
-            stems.update(lexicon.find_stems(lemma, key))
+            stems.add(lexicon.find_stems(lemma, key))
 
         results = set()
         for stem in stems:
