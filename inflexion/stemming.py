@@ -11,8 +11,8 @@ class StemmingRuleSet:
         # a reverse mapping of surface to key, stem pairs
         self.surface_to_key_stem = defaultdict(set)
 
-    def add(self, key, rule):
-        r = SandhiRule(rule)
+    def add(self, key, rule, tags=None):
+        r = SandhiRule(rule, tags)
         self.key_to_rules[key].append(r)
         self.surface_to_key_stem[r.surface].add((key, r))
         return r

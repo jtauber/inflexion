@@ -3,10 +3,12 @@ import re
 
 class SandhiRule:
 
-    def __init__(self, rule):
+    def __init__(self, rule, tags=None):
         """
         rule is string of form A|B>C<D|E
+        tags is set of strings annotating the rule for later filtering, etc.
         """
+        self.tags = tags or set()
         self.a, bcd, self.e = rule.split("|")
         self.b, cd = bcd.split(">")
         self.c, self.d = cd.split("<")
