@@ -115,36 +115,34 @@ the ``"enclitic"`` tag filter is passed in.
 lexicon
 -------
 
-A ``Lexicon`` is currently a mapping between lemmas and stems where stems
-are dictionaries mapping key regexes to stem sets.
+A ``Lexicon`` is currently a mapping between lemmas and a list of
+(key_regex, stem, tags) tuples.
 
-For example, the stems dictionary in the example below maps (for the lemma
+For example, the adds in the example below map (for the lemma
 παύω) any key matching ``P`` (i.e. present forms) to the stem "παυ" and any key
 matching ``A[AM]I`` (i.e. active or middle aorist indicatives) to "ἐπαυσ".
 
 >>> from inflexion.lexicon import Lexicon
 >>> lexicon = Lexicon()
->>> lexicon.add("παύω", [
-...     ("P", {"παυ"}),
-...     ("I", {"ἐπαυ"}),
-...     ("F[AM]", {"παυσ"}),
-...     ("A[AM][NPDSO]", {"παυσ"}),
-...     ("A[AM]I", {"ἐπαυσ"}),
-...     ("XA", {"πεπαυκ"}),
-...     ("YA", {"ἐπεπαυκ"}),
-...     ("X[MP]", {"πεπαυ"}),
-...     ("Y[MP]", {"ἐπεπαυ"}),
-...     ("AP[NPDSO]", {"παυθ"}),
-...     ("API", {"ἐπαυθ"}),
-...     ("FP", {"παυθησ"}),
-... ])
+>>> lexicon.add("παύω", "P", "παυ")
+>>> lexicon.add("παύω", "I", "ἐπαυ")
+>>> lexicon.add("παύω", "F[AM]", "παυσ")
+>>> lexicon.add("παύω", "A[AM][NPDSO]", "παυσ")
+>>> lexicon.add("παύω", "A[AM]I", "ἐπαυσ")
+>>> lexicon.add("παύω", "XA", "πεπαυκ")
+>>> lexicon.add("παύω", "YA", "ἐπεπαυκ")
+>>> lexicon.add("παύω", "X[MP]", "πεπαυ")
+>>> lexicon.add("παύω", "Y[MP]", "ἐπεπαυ")
+>>> lexicon.add("παύω", "AP[NPDSO]", "παυθ")
+>>> lexicon.add("παύω", "API", "ἐπαυθ")
+>>> lexicon.add("παύω", "FP", "παυθησ")
 
 This can then be used look up a stem (perhaps from
 ``StemmingRuleSet.possible_stems``) to see what lemma and key regex it could
 be:
 
 >>> sorted(lexicon.stem_to_lemma_key_regex["παυσ"])
-[('παύω', 'A[AM][NPDSO]'), ('παύω', 'F[AM]')]
+[('παύω', 'A[AM][NPDSO]', ()), ('παύω', 'F[AM]', ())]
 
 Inflexion
 ---------

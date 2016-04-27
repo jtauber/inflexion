@@ -130,16 +130,19 @@ class LexiconTest(unittest.TestCase):
 
     def test_lexicon(self):
         lexicon = Lexicon()
-        lexicon.add("FOO", [("bar", {"foo"})])
-        self.assertEqual(lexicon.lemma_to_stems["FOO"], [("bar", {"foo"})])
+        lexicon.add("FOO", "bar", "foo")
+        self.assertEqual(
+            lexicon.lemma_to_stems["FOO"],
+            [("bar", "foo", set())]
+        )
         self.assertEqual(
             lexicon.stem_to_lemma_key_regex["foo"],
-            {("FOO", "bar")}
+            {("FOO", "bar", ())}
         )
 
     def test_find_stems(self):
         lexicon = Lexicon()
-        lexicon.add("FOO", [("bar", {"foo"})])
+        lexicon.add("FOO", "bar", "foo")
         self.assertEqual(lexicon.find_stems("FOO", "barista"), {"foo"})
 
 
@@ -147,7 +150,7 @@ class MainTest(unittest.TestCase):
 
     def setUp(self):
         lexicon = Lexicon()
-        lexicon.add("FOO", [("bar", {"foo"})])
+        lexicon.add("FOO", "bar", "foo")
         rules = StemmingRuleSet()
         rules.add("barista", "|o><|llow")
         self.inflexion = Inflexion()
