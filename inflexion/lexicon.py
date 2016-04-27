@@ -17,13 +17,32 @@ class Lexicon:
             # we use tuple(sorted(...)) to make deterministically hashable
             (lemma, key_regex, tuple(sorted(tags))))
 
-    def find_stems(self, lemma, key):
+    def find_stems(self, lemma, key, tag_filter=None):
         """
         returns a (possibly empty) stem_set for the given lemma and key
         """
-        result = set()
+        tag_filter = tag_filter or set()
+
+        prev_key_regex = None
+
         for key_regex, stem, tags in self.lemma_to_stems[lemma]:
+
+            skip = False
+            for tag in tags:
+                if tag[0] == "+" and tag[1:] not in tag_filter:
+                    skip = True
+                    break
+                if tag[0] == "-" and tag[1:] in tag_filter:
+                    skip = True
+                    break
+            if skip:
+                continue
+
             if re.match(key_regex, key):
-                result = {stem}  # we don't break or return as we want last @@@
+                if key_regex != prev_key_regex:  # this means multiple stems
+                    result = set()               # for same key_regex must be
+                    prev_key_regex = key_regex   # contiguously added
+
+                result.add(stem)
 
         return result

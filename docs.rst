@@ -144,6 +144,24 @@ be:
 >>> sorted(lexicon.stem_to_lemma_key_regex["παυσ"])
 [('παύω', 'A[AM][NPDSO]', ()), ('παύω', 'F[AM]', ())]
 
+Tag filters can be used to limit which stems are considered.
+
+>>> lexicon.add("ἵστημι", "A[AM][NPDSO]", "στησ", {"-intransitive"})
+>>> lexicon.add("ἵστημι", "A[AM][NPDSO]", "στα{root}", {"-transitive"})
+
+Note that ``-intransitive`` means the stem doesn't apply if intransitive.
+This approach means that in the absence of any tag filters, both possibilities
+are returned (whereas had ``+transitive`` and ``+intransitive`` been used,
+neither stem would come up in the default case of no tag filter).
+
+>>> sorted(lexicon.find_stems("ἵστημι", "AAN"))
+['στα{root}', 'στησ']
+>>> lexicon.find_stems("ἵστημι", "AAN", {"transitive"})
+{'στησ'}
+>>> lexicon.find_stems("ἵστημι", "AAN", {"intransitive"})
+{'στα{root}'}
+
+
 Inflexion
 ---------
 

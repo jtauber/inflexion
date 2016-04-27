@@ -145,6 +145,28 @@ class LexiconTest(unittest.TestCase):
         lexicon.add("FOO", "bar", "foo")
         self.assertEqual(lexicon.find_stems("FOO", "barista"), {"foo"})
 
+    def test_find_stems_with_tags_1(self):
+        lexicon = Lexicon()
+        lexicon.add("FOO", "bar", "faa", {'+a'})
+        lexicon.add("FOO", "bar", "fee", {'-a'})
+        self.assertEqual(
+            lexicon.find_stems("FOO", "barista"),
+            {"fee"}
+        )
+        self.assertEqual(
+            lexicon.find_stems("FOO", "barista", {"a"}),
+            {"faa"}
+        )
+
+    def test_find_stems_with_tags_2(self):
+        lexicon = Lexicon()
+        lexicon.add("FOO", "bar", "faa", {'-a'})
+        lexicon.add("FOO", "bar", "fee", {'-b'})
+        self.assertEqual(
+            lexicon.find_stems("FOO", "barista"),
+            {"faa", "fee"}
+        )
+
 
 class MainTest(unittest.TestCase):
 
