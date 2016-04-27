@@ -24,9 +24,9 @@ class Lexicon:
         tag_filter = tag_filter or set()
 
         prev_key_regex = None
+        result = set()
 
         for key_regex, stem, tags in self.lemma_to_stems[lemma]:
-
             skip = False
             for tag in tags:
                 if tag[0] == "+" and tag[1:] not in tag_filter:
