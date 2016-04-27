@@ -111,6 +111,8 @@ SandhiRule('|α!>α<|μέν', tags={'+enclitic'})
 In the above two examples, different rules are triggered depending on whether
 the ``"enclitic"`` tag filter is passed in.
 
+@@@ this is a bad example as we no longer do enclitic ending matches this way.
+
 
 lexicon
 -------
