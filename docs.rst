@@ -176,11 +176,23 @@ parse forms.
 >>> inflexion.add_lexicon(lexicon)
 >>> inflexion.add_stemming_rule_set(rules)
 
->>> inflexion.generate("παύω", "PAI.3S")
-{'παυει'}
+``Inflexion.generate`` takes a lemma and a parse key and returns a dictionary
+mapping possible inflected forms to a list of explanations of how that form was
+generated.
+
+>>> results = inflexion.generate("παύω", "PAI.3S")
+>>> for form in results:
+...     print(form)
+παυει
+
+>>> results["παυει"][0]["stem"]
+'παυ'
+>>> sorted(results["παυει"][0]["stemming"].items())
+[('base', 'παυ'), ('ending', 'ει'), ('rule', SandhiRule('|>ει<ει|')), ('used_default', True)]
 
 (note that, inflexion itself does not have knowledge of Ancient Greek
-accentuation)
+accentuation—that is implemented elsewhere)
+
 
 ``Inflexion`` can also parse a form with possible lemma / key pairs:
 

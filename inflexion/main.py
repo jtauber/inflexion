@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import re
 
 
@@ -21,11 +23,15 @@ class Inflexion:
         for lexicon in self.lexicons:
             stems.update(lexicon.find_stems(lemma, key, tag_filter))
 
-        results = set()
+        results = defaultdict(list)
         for stem in stems:
             for stemming_rule_set in self.stemming_rule_sets:
                 for result in stemming_rule_set.inflect(stem, key, tag_filter):
-                    results.add(result["base"] + result["ending"])
+                    form = result["base"] + result["ending"]
+                    results[form].append({
+                        "stem": stem,
+                        "stemming": result,
+                    })
 
         return results
 
