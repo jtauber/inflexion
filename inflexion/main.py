@@ -42,7 +42,8 @@ class Inflexion:
             for key, stem in stemming_rule_set.possible_stems(form):
                 for lexicon in self.lexicons:
                     for lemma, key_regex, tags in \
-                            lexicon.stem_to_lemma_key_regex[stem_post_processor(stem)]:
+                            lexicon.stem_to_lemma_key_regex[
+                                stem_post_processor(stem)]:
                         if re.match(key_regex, key):
                             results.add((lemma, key))
 
