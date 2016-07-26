@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="inflexion",
-    version="0.6",
+    version="0.6.1",
     description="generic code for morphological analysis",
     license="MIT",
     url="http://github.com/jtauber/inflexion",
