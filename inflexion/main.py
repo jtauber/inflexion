@@ -35,14 +35,14 @@ class Inflexion:
 
         return results
 
-    def parse(self, form):
+    def parse(self, form, stem_post_processor=lambda x: x):
         results = set()
 
         for stemming_rule_set in self.stemming_rule_sets:
             for key, stem in stemming_rule_set.possible_stems(form):
                 for lexicon in self.lexicons:
                     for lemma, key_regex, tags in \
-                            lexicon.stem_to_lemma_key_regex[stem]:
+                            lexicon.stem_to_lemma_key_regex[stem_post_processor(stem)]:
                         if re.match(key_regex, key):
                             results.add((lemma, key))
 
