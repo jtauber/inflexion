@@ -17,7 +17,8 @@ class Lexicon:
             # we use tuple(sorted(...)) to make deterministically hashable
             (lemma, key_regex, tuple(sorted(tags))))
 
-    def find_stems(self, lemma, key, tag_filter=None):
+    def find_stems(self, lemma, key,
+                   tag_filter=None, stem_post_processor=lambda x: x):
         """
         returns a (possibly empty) stem_set for the given lemma and key
         """
@@ -43,6 +44,6 @@ class Lexicon:
                     result = set()               # for same key_regex must be
                     prev_key_regex = key_regex   # contiguously added
 
-                result.add(stem)
+                result.add(stem_post_processor(stem))
 
         return result
