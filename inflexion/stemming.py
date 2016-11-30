@@ -1,4 +1,5 @@
 from collections import defaultdict
+import re
 
 from .sandhi import SandhiRule
 
@@ -58,6 +59,8 @@ class StemmingRuleSet:
 
     def possible_stems(self, form):
         for surface, rules in self.surface_to_key_stem.items():
-            if form.endswith(surface):
+            surface = surface.replace("(", r"\(").replace(")", r"\)")
+            m = re.match("(.*)" + surface + "$", form)
+            if m:
                 for key, rule in rules:
-                    yield (key, form[:-len(surface)] + rule.stem)
+                    yield (key, m.group(1) + rule.stem)
