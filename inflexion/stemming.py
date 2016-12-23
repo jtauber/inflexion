@@ -63,4 +63,5 @@ class StemmingRuleSet:
             m = re.match("(.*)" + surface + "$", form)
             if m:
                 for key, rule in rules:
-                    yield (key, m.group(1) + rule.stem)
+                    m2 = re.match(m.group(1) + "(" + rule.theme + ")", form)
+                    yield (key, m.group(1) + m2.group(1) + rule.b)
