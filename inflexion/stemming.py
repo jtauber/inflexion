@@ -11,11 +11,13 @@ class StemmingRuleSet:
         self.key_to_rules = defaultdict(list)
         # a reverse mapping of surface to key, stem pairs
         self.surface_to_key_stem = defaultdict(set)
+        self.surface_to_key_stem2 = defaultdict(lambda: defaultdict(set))
 
     def add(self, key, rule, tags=None):
         r = SandhiRule(rule, tags)
         self.key_to_rules[key].append(r)
         self.surface_to_key_stem[r.surface].add((key, r))
+        self.surface_to_key_stem2[len(r.surface)][r.surface].add((key, r))
         return r
 
     def inflect(self, stem, key, tag_filter=None):
@@ -65,3 +67,11 @@ class StemmingRuleSet:
                 for key, rule in rules:
                     m2 = re.match(m.group(1) + "(" + rule.theme + ")", form)
                     yield (key, m.group(1) + m2.group(1) + rule.b)
+
+    def possible_stems2(self, form):
+        for size in self.surface_to_key_stem2:
+            for key, rule in self.surface_to_key_stem2[size][form[-size:]]:
+                surface = rule.surface.replace("(", r"\(").replace(")", r"\)")
+                m = re.match("(.*)" + surface + "$", form)
+                if m:
+                    yield (key, m.group(1) + rule.stem)
